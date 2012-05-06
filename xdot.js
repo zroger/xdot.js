@@ -43,10 +43,12 @@ var Color = function(r, g, b, a) {
   this.a = a || 1.0;
   
   this.toHex = function() {
-    return '#' + 
-      this.r.toString(16) +
-      this.g.toString(16) +
-      this.b.toString(16);
+    var intToHex = function(i) {
+      var h = i.toString(16);
+      return h.length === 2 ? h : '0' + h;
+    };
+
+    return '#' + intToHex(r) + intToHex(g) + intToHex(b);
   };
 
   this.toString = function() {
