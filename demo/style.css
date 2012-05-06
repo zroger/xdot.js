@@ -1,0 +1,13 @@
+.node {
+  margin-right: 3px;
+  padding: 3px;
+  border: solid 1px #ddd;
+  background: #eee;
+}
+
+span.symbol {
+  margin-right: 3px;
+  padding: 3px;
+  border: solid 1px #dff;
+  background: #eff;
+}

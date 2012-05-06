@@ -1,0 +1,60 @@
+digraph StateFlow {
+	graph [ranksep=".75"];
+	node [label="\N", shape=box];
+	graph [bb="0,0,570.99,528",
+		_draw_="c 9 -#ffffffff C 9 -#ffffffff P 4 0 -1 0 528 572 528 572 -1 ",
+		xdotversion="1.2"];
+	{
+		graph [rank=source,
+			bb="",
+			_draw_="",
+			xdotversion=""];
+		draft [label=Draft, pos="106,510", width="0.75", height="0.5", _draw_="c 9 -#000000ff p 4 133 528 79 528 79 492 133 492 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 106 504 0 29 5 -Draft "];
+	}
+	{
+		graph [rank=sink,
+			bb="",
+			_draw_="",
+			xdotversion=""];
+		published [label=Published, pos="267,18", width="0.98075", height="0.5", _draw_="c 9 -#000000ff p 4 302 36 232 36 232 0 302 0 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 267 12 0 55 9 -Published "];
+	}
+	{
+		graph [rank=none,
+			bb="",
+			_draw_="",
+			xdotversion=""];
+		draft_needs_review [label="Draft,\nneeds review", pos="120,383", width="1.2324", height="0.57778", _draw_="c 9 -#000000ff p 4 165 404 75 404 75 362 165 362 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 120 386 0 33 6 -Draft, F 14.000000 11 -Times-Roman c 9 -#000000ff T 120 369 0 73 12\
+ -needs review "];
+		draft_approved [label="Draft,\napproved", pos="183,253", width="0.94507", height="0.57778", _draw_="c 9 -#000000ff p 4 217 274 149 274 149 232 217 232 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 183 256 0 33 6 -Draft, F 14.000000 11 -Times-Roman c 9 -#000000ff T 183 239 0 52 8 \
+-approved "];
+		published_needs_review [label="Published,\nneeds review", pos="462,383", width="1.2324", height="0.57778", _draw_="c 9 -#000000ff p 4 507 404 417 404 417 362 507 362 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 462 386 0 58 10 -Published, F 14.000000 11 -Times-Roman c 9 -#000000ff T 462 369 0 \
+73 12 -needs review "];
+		published_expiring [label="Published, scheduled\nfor expiration", pos="367,253", width="1.8625", height="0.57778", _draw_="c 9 -#000000ff p 4 434 274 300 274 300 232 434 232 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 367 256 0 118 20 -Published, scheduled F 14.000000 11 -Times-Roman c 9 -#000000ff T\
+ 367 239 0 76 14 -for expiration "];
+		unpublished [label=Unpublished, pos="287,126", width="1.2052", height="0.5", _draw_="c 9 -#000000ff p 4 330 144 244 144 244 108 330 108 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 287 120 0 71 11 -Unpublished "];
+	}
+	draft -> draft_needs_review [label="Send for\nreview", pos="e,92.624,403.82 88.515,491.76 82.068,484.22 75.525,474.85 72.176,465 67.312,450.69 66.332,444.94 72.176,431 75.246,423.68 80.075\
+,416.92 85.507,410.95", lp="96.912,448", _draw_="c 9 -#000000ff B 10 89 492 82 484 76 475 72 465 67 451 66 445 72 431 75 424 80 417 86 411 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 88 413 93 404 83 408 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 97 451 0 47 8 -Send for F 14.000000 11 -Times-Roman c 9 -#000000ff T 97 434 0 38 6 \
+-review "];
+	draft -> published [label="Publish\nimmediately", pos="e,231.54,25.361 78.977,493.08 47.572,472.31 0,432.8 0,384 0,384 0,384 0,125 0,77.866 145.55,42.549 221.72,27.293", lp="34.99,253", _draw_="c 9 -#000000ff B 10 79 493 48 472 0 433 0 384 0 384 0 384 0 125 0 78 146 43 222 27 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 222 31 232 25 221 24 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 35 256 0 42 7 -Publish F 14.000000 11 -Times-Roman c 9 -#000000ff T 35 239 0 69 11 \
+-immediately "];
+	draft_needs_review -> draft_approved [label="Approve for\npublishing", pos="e,173.18,273.95 129.71,362.28 140.13,341.11 156.79,307.25 168.71,283.04", lp="193.41,318", _draw_="c 9 -#000000ff B 4 130 362 140 341 157 307 169 283 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 172 284 173 274 166 281 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 193 321 0 68 11 -Approve for F 14.000000 11 -Times-Roman c 9 -#000000ff T 193 304 0\
+ 59 10 -publishing "];
+	draft_needs_review -> draft [label="Return\nto author", pos="e,112.85,491.74 121.68,403.77 122.69,420.25 123.21,444.29 120,465 119.12,470.64 117.65,476.55 115.98,482.15", lp="148.08,448", _draw_="c 9 -#000000ff B 7 122 404 123 420 123 444 120 465 119 471 118 477 116 482 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 113 481 113 492 119 483 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 148 451 0 38 6 -Return F 14.000000 11 -Times-Roman c 9 -#000000ff T 148 434 0 50 9 \
+-to author "];
+	draft_needs_review -> published [label="Publish\nimmediately", pos="e,235.96,36.131 113.15,362.25 101,323.89 79.263,237.23 105.02,171 127.81,112.4 187.27,66.791 227.45,41.393", lp="140.99,188", _draw_="c 9 -#000000ff B 7 113 362 101 324 79 237 105 171 128 112 187 67 227 41 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 229 44 236 36 226 38 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 141 191 0 42 7 -Publish F 14.000000 11 -Times-Roman c 9 -#000000ff T 141 174 0 69 11\
+ -immediately "];
+	draft_approved -> published [label=Publish, pos="e,246.55,36.021 180.49,232.08 177.71,203.5 175.55,149.72 191.99,108 201.94,82.729 222.12,59.459 239.05,43.057", lp="213.01,126", _draw_="c 9 -#000000ff B 7 180 232 178 203 176 150 192 108 202 83 222 59 239 43 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 242 45 247 36 237 40 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 213 120 0 42 7 -Publish "];
+	draft_approved -> unpublished [label=Archive, pos="e,250.63,144.11 187.63,232.2 192.54,214.58 201.73,188.91 216.91,171 223.88,162.78 232.79,155.6 241.89,149.55", lp="239.54,188", _draw_="c 9 -#000000ff B 7 188 232 193 215 202 189 217 171 224 163 233 156 242 150 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 244 152 251 144 240 146 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 240 182 0 45 7 -Archive "];
+	published -> published_needs_review [label="Queue for\nreview", pos="e,463.58,362.39 302.55,31.098 336.24,44.481 385.51,69.4 412,108 464.09,183.9 466.36,298.45 464.1,352.18", lp="480.18,188", _draw_="c 9 -#000000ff B 7 303 31 336 44 386 69 412 108 464 184 466 298 464 352 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 461 352 464 362 468 353 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 480 191 0 56 9 -Queue for F 14.000000 11 -Times-Roman c 9 -#000000ff T 480 174 0 38\
+ 6 -review "];
+	published -> unpublished [label=Archive, pos="e,283.79,107.97 270.27,36.341 273.42,53.042 278.24,78.554 281.89,97.931", lp="301.54,72", _draw_="c 9 -#000000ff B 4 270 36 273 53 278 79 282 98 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 278 99 284 108 285 97 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 302 66 0 45 7 -Archive "];
+	published_needs_review -> published_expiring [label="Alert\nstakeholders", pos="e,365,273.73 417.37,366.51 402.59,359.21 387.52,348.95 378.02,335 367.93,320.18 365.11,300.26 364.85,283.89", lp="413.99,318", _draw_="c 9 -#000000ff B 7 417 367 403 359 388 349 378 335 368 320 365 300 365 284 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 368 284 365 274 361 284 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 414 321 0 28 5 -Alert F 14.000000 11 -Times-Roman c 9 -#000000ff T 414 304 0 69 12 \
+-stakeholders "];
+	published_needs_review -> published [label=Approve, pos="e,302.46,27.556 474.81,362.3 497.97,324.01 541.77,237.48 512,171 475.76,90.076 372.37,48.366 312.11,30.348", lp="546.49,188", _draw_="c 9 -#000000ff B 7 475 362 498 324 542 237 512 171 476 90 372 48 312 30 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 313 27 302 28 311 34 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 546 182 0 48 7 -Approve "];
+	published_expiring -> published [label=Approve, pos="e,299.22,36.039 367.65,232.19 367.89,195.57 363.85,116.21 328,63 322.64,55.047 315.34,48.036 307.65,42.081", lp="384.49,126", _draw_="c 9 -#000000ff B 7 368 232 368 196 364 116 328 63 323 55 315 48 308 42 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 309 39 299 36 305 45 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 384 120 0 48 7 -Approve "];
+	published_expiring -> unpublished [label=Expire, pos="e,290.81,144.22 340.82,232.32 331.9,224.59 322.48,215.13 315.68,205 305.27,189.47 298.04,169.67 293.45,153.91", lp="334.66,188", _draw_="c 9 -#000000ff B 7 341 232 332 225 322 215 316 205 305 189 298 170 293 154 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 297 153 291 144 290 155 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 335 182 0 37 6 -Expire "];
+	unpublished -> published [label=Revert, pos="e,248.69,36.164 257.98,107.88 248.77,100.83 239.69,91.759 234.68,81 228.97,68.724 234.37,55.372 242.29,44.215", lp="253.66,72", _draw_="c 9 -#000000ff B 7 258 108 249 101 240 92 235 81 229 69 234 55 242 44 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 245 46 249 36 240 42 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 254 66 0 37 6 -Revert "];
+	unpublished -> draft [label="Make\nupdates", pos="e,133.17,497.25 285.91,144.31 281.67,198.16 261.96,365.11 177,465 167.47,476.2 154.36,485.43 141.99,492.49", lp="279.38,318", _draw_="c 9 -#000000ff B 7 286 144 282 198 262 365 177 465 167 476 154 485 142 492 ", _hdraw_="S 5 -solid c 9 -#000000ff C 9 -#000000ff P 3 140 489 133 497 144 496 ", _ldraw_="F 14.000000 11 -Times-Roman c 9 -#000000ff T 279 321 0 31 4 -Make F 14.000000 11 -Times-Roman c 9 -#000000ff T 279 304 0 42 7 -updates\
+ "];
+}
