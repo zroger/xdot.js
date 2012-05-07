@@ -25,6 +25,99 @@
       file: 'demo/examples/Genetic_Programming.gv.xdot',
       name: 'Genetic Programming',
       url: 'http://www.graphviz.org/content/Genetic_Programming'
+    },
+    lion_share: {
+      file: 'demo/examples/lion_share.gv.xdot',
+      name: 'Lion Share',
+      url: 'http://www.graphviz.org/content/lion_share'
+    },
+    profile: {
+      file: 'demo/examples/profile.gv.xdot',
+      name: 'Program Profile',
+      url: 'http://www.graphviz.org/content/profile'
+    },
+    // TODO: this is not working.
+    psg: {
+      file: 'demo/examples/psg.gv.xdot',
+      name: 'PSG',
+      url: 'http://www.graphviz.org/content/psg'
+    },
+    sdh: {
+      file: 'demo/examples/sdh.gv.xdot',
+      name: 'Synchronous Digital Heirarchy Stack',
+      url: 'http://www.graphviz.org/content/sdh'
+    },
+    siblings: {
+      file: 'demo/examples/siblings.gv.xdot',
+      name: 'Siblings',
+      url: 'http://www.graphviz.org/content/siblings'
+    },
+    switch: {
+      file: 'demo/examples/switch.gv.xdot',
+      name: 'Switch Network',
+      url: 'http://www.graphviz.org/content/switch'
+    },
+    traffic_lights: {
+      file: 'demo/examples/traffic_lights.gv.xdot',
+      name: 'Traffic Lights',
+      url: 'http://www.graphviz.org/content/traffic_lights'
+    },
+    unix: {
+      file: 'demo/examples/unix.gv.xdot',
+      name: 'Unix Family Tree',
+      url: 'http://www.graphviz.org/content/unix'
+    },
+    world: {
+      file: 'demo/examples/world.gv.xdot',
+      name: 'World Dynamics',
+      url: 'http://www.graphviz.org/content/world'
+    },
+    twopi2: {
+      file: 'demo/examples/twopi2.gv.xdot',
+      name: 'Radial Layout',
+      url: 'http://www.graphviz.org/content/twopi2'
+    },
+    er: {
+      file: 'demo/examples/ER.gv.xdot',
+      name: 'Entity Relation',
+      url: 'http://www.graphviz.org/content/ER'
+    },
+    philo: {
+      file: 'demo/examples/philo.gv.xdot',
+      name: 'Philosophers Dilemma',
+      url: 'http://www.graphviz.org/content/philo'
+    },
+    process: {
+      file: 'demo/examples/process.gv.xdot',
+      name: 'Process',
+      url: 'http://www.graphviz.org/content/process'
+    },
+    softmaint: {
+      file: 'demo/examples/softmaint.gv.xdot',
+      name: 'Module Dependencies',
+      url: 'http://www.graphviz.org/content/softmaint'
+    },
+    transparency: {
+      file: 'demo/examples/transparency.gv.xdot',
+      name: 'Partially Transparent Colors',
+      url: 'http://www.graphviz.org/content/transparency'
+    },
+    // TODO: update layout using sfdp.
+    root: {
+      file: 'demo/examples/root.gv.xdot',
+      name: 'Large graph layout using sfdp',
+      url: 'http://www.graphviz.org/content/root'
+    },
+    // TODO: not working.
+    gd_1994_2007: {
+      file: 'demo/examples/gd_1994_2007.gv.xdot',
+      name: 'Cluster relations using gvmap',
+      url: 'http://www.graphviz.org/Gallery/undirected/gd_1994_2007.html'
+    },
+    networkmap_twopi: {
+      file: 'demo/examples/networkmap_twopi.gv.xdot',
+      name: 'Radial Layout of a Network Graph',
+      url: 'http://www.graphviz.org/Gallery/undirected/networkmap_twopi.html'
     }
   };
 
