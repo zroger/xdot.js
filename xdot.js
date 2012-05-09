@@ -982,11 +982,7 @@ var XDotAttrParser = function(parser, buf) {
   };
 
   this.handle_ellipse = function(x0, y0, w, h, filled) {
-    if(filled) {
-      // xdot uses this to mean "draw a filled shape with an outline"
-      this.shapes.push(new EllipseShape(this.pen, x0, y0, w, h, true));
-    }
-    this.shapes.push(new EllipseShape(this.pen, x0, y0, w, h));
+    this.shapes.push(new EllipseShape(this.pen, x0, y0, w, h, filled));
   };
 
   this.handle_image = function(x0, y0, w, h, path) {
@@ -998,19 +994,11 @@ var XDotAttrParser = function(parser, buf) {
   };
 
   this.handle_bezier = function(points, filled) {
-    // if (filled) {
-    //   // xdot uses this to mean "draw a filled shape with an outline"
-    //   this.shapes.push(new BezierShape(this.pen, points, true));
-    // }
     this.shapes.push(new BezierShape(this.pen, points, filled));
   };
 
   this.handle_polygon = function(points, filled) {
-    if (filled) {
-      // xdot uses this to mean "draw a filled shape with an outline"
-      this.shapes.push(new PolygonShape(this.pen, points, true));
-    }
-    this.shapes.push(new PolygonShape(this.pen, points));
+    this.shapes.push(new PolygonShape(this.pen, points, filled));
   };
 };
 

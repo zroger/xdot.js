@@ -141,10 +141,16 @@
   };
 
   Demo.resizeContainer = function() {
-    $('#demo-container').height(
-      $(window).height() - $('#demo-container').position().top - 2
-    );
+    var $el = $('#demo-container'),
+      w = $el.width(),
+      h = $(window).height() - $el.position().top - 2;
+    $el.height(h);
+    
+    if (glob.graphPaper) {
+      graphPaper.setSize(w, h);
+    }
   };
+
   $(function() {
     $(window).resize(Demo.resizeContainer).resize();
 
@@ -169,6 +175,7 @@
 
       $('#demo-display').empty();
       $('.demo-info').hide();
+      $('#graph-controls').hide();
 
       if (!example) {
         return;
@@ -178,15 +185,20 @@
       $('.demo-source').attr('href', example.url);
       $('.demo-info').show();
       
+      $('#demo-container').addClass('loading');
       $.get(example.file, function(text) {
         var parser = new XDotParser(text);
         var graph = parser.parse();
         var graphPaper = Raphael('demo-display', $('#demo-display').width(), $('#demo-display').height());
-        
+
         graph.draw(graphPaper);
         graphPaper.zoomLevel = 0;
+
         glob.graphPaper = graphPaper;
         glob.graph = graph;
+        
+        $('#demo-container').removeClass('loading');
+        $('#graph-controls').show();
       });
     });
   });
