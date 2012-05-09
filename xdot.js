@@ -1,41 +1,32 @@
 /*jshint browser:true, jquery:true */
-var XDot = {
-  EOF: -1,
-  SKIP: -2,
+(function(root) {
 
-  ID: 0,
-  STR_ID: 1,
-  HTML_ID: 2,
-  EDGE_OP: 3,
+// Lexer tokens.
+var EOF = -1,
+    SKIP = -2,
 
-  LSQUARE: 4,
-  RSQUARE: 5,
-  LCURLY: 6,
-  RCURLY: 7,
-  COMMA: 8,
-  COLON: 9,
-  SEMI: 10,
-  EQUAL: 11,
-  PLUS: 12,
+    ID = 0,
+    STR_ID = 1,
+    HTML_ID = 2,
+    EDGE_OP = 3,
 
-  STRICT: 13,
-  GRAPH: 14,
-  DIGRAPH: 15,
-  NODE: 16,
-  EDGE: 17,
-  SUBGRAPH: 18,
+    LSQUARE = 4,
+    RSQUARE = 5,
+    LCURLY = 6,
+    RCURLY = 7,
+    COMMA = 8,
+    COLON = 9,
+    SEMI = 10,
+    EQUAL = 11,
+    PLUS = 12,
+
+    STRICT = 13,
+    GRAPH = 14,
+    DIGRAPH = 15,
+    NODE = 16,
+    EDGE = 17,
+    SUBGRAPH = 18;
   
-  token: function(x) {
-    var r = x;
-    jQuery.each(XDot, function(key, value) {
-      if (x == value) {
-        r = key;
-      }
-    });
-    return r;
-  }
-};
-
 var Color = function(r, g, b, a) {
   this.r = r || 0.0;
   this.g = g || 0.0;
@@ -313,7 +304,7 @@ var DotScanner = function() {
   // token regular expression table
   this.tokens = [
       // whitespace and comments
-      [XDot.SKIP,
+      [SKIP,
           // whitespace
           '[ \\t\\f\\r\\n\\v]+|' +
           // // ... comments
@@ -324,38 +315,38 @@ var DotScanner = function() {
           '#[^\\r\\n]*',
       false],
       // Alphanumeric IDs
-      [XDot.ID, '[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*', true],
+      [ID, '[a-zA-Z_\\x80-\\xff][a-zA-Z0-9_\\x80-\\xff]*', true],
       // Numeric IDs
-      [XDot.ID, '-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)', false],
+      [ID, '-?(?:\\.[0-9]+|[0-9]+(?:\\.[0-9]*)?)', false],
       // String IDs
-      [XDot.STR_ID, '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', false],
+      [STR_ID, '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"', false],
       // HTML IDs
-      [XDot.HTML_ID, '<[^<>]*(?:<[^<>]*>[^<>]*)*>', false],
+      [HTML_ID, '<[^<>]*(?:<[^<>]*>[^<>]*)*>', false],
       // Edge operators
-      [XDot.EDGE_OP, '-[>-]', true]
+      [EDGE_OP, '-[>-]', true]
   ];
 
   // symbol table
   this.symbols = {
-      '[': XDot.LSQUARE,
-      ']': XDot.RSQUARE,
-      '{': XDot.LCURLY,
-      '}': XDot.RCURLY,
-      ',': XDot.COMMA,
-      ':': XDot.COLON,
-      ';': XDot.SEMI,
-      '=': XDot.EQUAL,
-      '+': XDot.PLUS
+      '[': LSQUARE,
+      ']': RSQUARE,
+      '{': LCURLY,
+      '}': RCURLY,
+      ',': COMMA,
+      ':': COLON,
+      ';': SEMI,
+      '=': EQUAL,
+      '+': PLUS
   };
 
   // literal table
   this.literals = {
-      'strict': XDot.STRICT,
-      'graph': XDot.GRAPH,
-      'digraph': XDot.DIGRAPH,
-      'node': XDot.NODE,
-      'edge': XDot.EDGE,
-      'subgraph': XDot.SUBGRAPH
+      'strict': STRICT,
+      'graph': GRAPH,
+      'digraph': DIGRAPH,
+      'node': NODE,
+      'edge': EDGE,
+      'subgraph': SUBGRAPH
   };
 
   this.ignorecase = true;
@@ -374,7 +365,7 @@ DotScanner.prototype.next = function(buf, pos) {
   var text, type;
 
   if (pos >= buf.length) {
-    return [XDot.EOF, '', pos];
+    return [EOF, '', pos];
   }
 
   // Using the 'g' flag, so this should resume from the lastIndex position.
@@ -443,7 +434,7 @@ DotLexer.prototype.next = function() {
 
     this.pos = endpos;
 
-    if (type == XDot.SKIP) {
+    if (type == SKIP) {
       continue;
     }
     else if (type === undefined) {
@@ -480,7 +471,7 @@ DotLexer.prototype.consume = function(text) {
 };
 
 DotLexer.prototype.filter = function(type, text) {
-  if (type == XDot.STR_ID) {
+  if (type == STR_ID) {
     text = text.substring(1, text.length - 1);
 
     // line continuations
@@ -491,11 +482,11 @@ DotLexer.prototype.filter = function(type, text) {
     // quotes
     text = text.replace('\\"', '"');
 
-    type = XDot.ID;
+    type = ID;
   }
-  else if (type == XDot.HTML_ID) {
+  else if (type == HTML_ID) {
     text = text.substring(1, text.length - 1);
-    type = XDot.ID;
+    type = ID;
   }
   return [type, text];
 };
@@ -540,17 +531,17 @@ var XDotParser = function(xdotcode) {
 
 XDotParser.prototype.parse = function() {
   this.parse_graph();
-  this.match(XDot.EOF);
+  this.match(EOF);
   return new Graph(this.width, this.height, this.shapes, this.nodes, this.edges);
 };
 
 XDotParser.prototype.parse_graph = function() {
-  if (this.lookahead.type == XDot.STRICT) {
+  if (this.lookahead.type == STRICT) {
     this.consume();
   }
-  this.skip(XDot.LCURLY);
+  this.skip(LCURLY);
   this.consume();
-  while (this.lookahead.type != XDot.RCURLY) {
+  while (this.lookahead.type != RCURLY) {
     this.parse_stmt();
   }
   this.consume();
@@ -558,17 +549,17 @@ XDotParser.prototype.parse_graph = function() {
 
 XDotParser.prototype.parse_subgraph = function() {
   var id;
-  if (this.lookahead.type == XDot.SUBGRAPH) {
+  if (this.lookahead.type == SUBGRAPH) {
     this.consume();
-    if (this.lookahead.type == XDot.ID) {
+    if (this.lookahead.type == ID) {
       id = this.lookahead.text;
       this.consume();
     }
   }
 
-  if (this.lookahead.type == XDot.LCURLY) {
+  if (this.lookahead.type == LCURLY) {
     this.consume();
-    while (this.lookahead.type != XDot.RCURLY) {
+    while (this.lookahead.type != RCURLY) {
       this.parse_stmt();
     }
     this.consume();
@@ -580,30 +571,30 @@ XDotParser.prototype.parse_subgraph = function() {
 XDotParser.prototype.parse_stmt = function() {
   var attr, attrs;
   switch (this.lookahead.type) {
-    case XDot.GRAPH:
+    case GRAPH:
       this.consume();
       attrs = this.parse_attrs();
       jQuery.extend(this.graph_attrs, attrs);
       this.handle_graph(attrs);
       break;
-    case XDot.NODE:
+    case NODE:
       this.consume();
       jQuery.extend(this.node_attrs, this.parse_attrs());
       break;
-    case XDot.EDGE:
+    case EDGE:
       this.consume();
       jQuery.extend(this.edge_attrs, this.parse_attrs());
       break;
-    case XDot.SUBGRAPH:
-    case XDot.LCURLY:
+    case SUBGRAPH:
+    case LCURLY:
       this.parse_subgraph();
       break;
     default:
       var id = this.parse_node_id();
-      if (this.lookahead.type == XDot.EDGE_OP) {
+      if (this.lookahead.type == EDGE_OP) {
         this.consume();
         var node_ids = [id, this.parse_node_id()];
-        while (this.lookahead.typ == XDot.EDGE_OP) {
+        while (this.lookahead.typ == EDGE_OP) {
           node_ids.push(this.parse_node_id());
         }
         attrs = this.parse_attrs();
@@ -611,7 +602,7 @@ XDotParser.prototype.parse_stmt = function() {
           this.handle_edge(node_ids[i], node_ids[i + 1], attrs);
         }
       }
-      else if (this.lookahead.type == XDot.EQUAL) {
+      else if (this.lookahead.type == EQUAL) {
         this.consume();
         this.parse_id();
       }
@@ -620,22 +611,22 @@ XDotParser.prototype.parse_stmt = function() {
         this.handle_node(id, attrs);
       }
   }
-  if (this.lookahead.type == XDot.SEMI) {
+  if (this.lookahead.type == SEMI) {
     this.consume();
   }
 };
 
 XDotParser.prototype.parse_attrs = function() {
   var attrs = {};
-  while (this.lookahead.type == XDot.LSQUARE) {
+  while (this.lookahead.type == LSQUARE) {
     this.consume();
-    while (this.lookahead.type != XDot.RSQUARE) {
+    while (this.lookahead.type != RSQUARE) {
       var attr, name, value;
       attr = this.parse_attr();
       name = attr[0];
       value = attr[1];
       attrs[name] = value;
-      if (this.lookahead.type == XDot.COMMA) {
+      if (this.lookahead.type == COMMA) {
         this.consume();
       }
     }
@@ -646,7 +637,7 @@ XDotParser.prototype.parse_attrs = function() {
 
 XDotParser.prototype.parse_attr = function() {
   var value, name = this.parse_id();
-  if (this.lookahead.type == XDot.EQUAL) {
+  if (this.lookahead.type == EQUAL) {
     this.consume();
     value = this.parse_id();
   }
@@ -659,10 +650,10 @@ XDotParser.prototype.parse_attr = function() {
 XDotParser.prototype.parse_node_id = function() {
   var node_id = this.parse_id();
   var port, compass_pt;
-  if (this.lookahead.type == XDot.COLON) {
+  if (this.lookahead.type == COLON) {
     this.consume();
     port = this.parse_id();
-    if (this.lookahead.type == XDot.COLON) {
+    if (this.lookahead.type == COLON) {
       this.consume();
       compass_pt = this.parse_id();
     }
@@ -671,7 +662,7 @@ XDotParser.prototype.parse_node_id = function() {
 };
 
 XDotParser.prototype.parse_id = function() {
-  this.match(XDot.ID);
+  this.match(ID);
   var id = this.lookahead.text;
   this.consume();
   return id;
@@ -702,7 +693,7 @@ XDotParser.prototype.handle_graph = function(attrs) {
     this.top_graph = false;
   }
 
-  var draw_attrs = ["_draw_", "_ldraw_", "_hdraw_", "_tdraw_", "_hldraw_", "_tldraw_"];
+  var attr, draw_attrs = ["_draw_", "_ldraw_", "_hdraw_", "_tdraw_", "_hldraw_", "_tldraw_"];
   for (var i = 0; i < draw_attrs.length; i++) {
     if (draw_attrs[i] in attrs) {
       attr = draw_attrs[i];
@@ -730,7 +721,7 @@ XDotParser.prototype.handle_node = function(id, attrs) {
   x = xy[0];
   y = xy[1];
 
-  var draw_attrs = ["_draw_", "_ldraw_"];
+  var attr, draw_attrs = ["_draw_", "_ldraw_"];
   for (var i = 0; i < draw_attrs.length; i++) {
     if (draw_attrs[i] in attrs) {
       attr = draw_attrs[i];
@@ -755,7 +746,7 @@ XDotParser.prototype.handle_edge = function(src_id, dst_id, attrs) {
   var points = this.parse_edge_pos(attrs.pos);
   var shapes = [];
 
-  var draw_attrs = ["_draw_", "_ldraw_", "_hdraw_", "_tdraw_", "_hldraw_", "_tldraw_"];
+  var attr, draw_attrs = ["_draw_", "_ldraw_", "_hdraw_", "_tdraw_", "_hldraw_", "_tldraw_"];
   for (var i = 0; i < draw_attrs.length; i++) {
     if (draw_attrs[i] in attrs) {
       attr = draw_attrs[i];
@@ -1022,3 +1013,7 @@ var XDotAttrParser = function(parser, buf) {
     this.shapes.push(new PolygonShape(this.pen, points));
   };
 };
+
+root.XDotParser = XDotParser;
+
+})(this);
