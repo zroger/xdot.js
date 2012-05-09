@@ -1,4 +1,4 @@
-(function($) {
+(function($, glob) {
 
   var DemoFiles = {
     cluster: {
@@ -121,10 +121,47 @@
     }
   };
 
+  var Demo = {};
+  
+  Demo.zoom = function(zoom) {
+    var multiplier;
+    multiplier = 1.0 - (zoom / 10);
+
+    graphPaper.zoomLevel = zoom;
+    graphPaper.setViewBox(0, 0, 
+      graphPaper.width * multiplier,
+      graphPaper.height * multiplier);
+  };
+
+  Demo.zoomIn = function() {
+    Demo.zoom(graphPaper.zoomLevel + 1);
+  };
+  Demo.zoomOut = function() {
+    Demo.zoom(graphPaper.zoomLevel - 1);
+  };
+
+  Demo.resizeContainer = function() {
+    $('#demo-container').height(
+      $(window).height() - $('#demo-container').position().top - 2
+    );
+  };
   $(function() {
+    $(window).resize(Demo.resizeContainer).resize();
+
     jQuery.each(DemoFiles, function(key, data) {
       $('#demo-select').append('<option value="' + key + '">' + data.name + '</option>');
     });
+
+    $('#graph-controls .zoom-in').click(function(){
+      Demo.zoomIn();
+      return false;
+    });
+    $('#graph-controls .zoom-out').click(function(){
+      Demo.zoomOut();
+      return false;
+    });
+    
+    
 
     $('#demo-select').change(function(e) {
       var val = $(this).val();
@@ -143,11 +180,15 @@
       
       $.get(example.file, function(text) {
         var parser = new XDotParser(text);
-        var results = parser.parse();
+        var graph = parser.parse();
+        var graphPaper = Raphael('demo-display', $('#demo-display').width(), $('#demo-display').height());
         
-        results.draw();
+        graph.draw(graphPaper);
+        graphPaper.zoomLevel = 0;
+        glob.graphPaper = graphPaper;
+        glob.graph = graph;
       });
     });
   });
 
-})(jQuery);
+})(jQuery, this);

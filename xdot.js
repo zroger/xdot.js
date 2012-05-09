@@ -276,7 +276,6 @@ var Graph = function(w, h, shapes, nodes, edges) {
   
   this.draw = function(paper, highlight) {
     var i;
-    paper = Raphael('demo-display', w, h);
     for (i = 0; i < this.shapes.length; i++) {
       this.shapes[i].draw(paper);
     }
@@ -286,6 +285,7 @@ var Graph = function(w, h, shapes, nodes, edges) {
     for (i = 0; i < this.nodes.length; i++) {
       this.nodes[i].draw(paper);
     }
+    return this;
   };
 };
 

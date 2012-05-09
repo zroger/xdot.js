@@ -9,6 +9,7 @@
 
     <!-- Le styles -->
     <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./demo/style.css" rel="stylesheet">
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -50,13 +51,13 @@
     </div>
 
     <div class="container-fluid">
-
-      <h1>xdot.js</h1>
-      <p>xdot.js parses GraphViz xdot files, into RaphaelJS graphics.</p>
-
       <div class="row-fluid">
         <div class="span4">
+
           <form class="well">
+            <h1>xdot.js</h1>
+            <p>xdot.js parses GraphViz xdot files, into RaphaelJS graphics.</p>
+
             <label>Choose a graph to start:</label>
             <select id="demo-select">
               <option value="">-- Choose a graph --</option>
@@ -69,8 +70,17 @@
           </div>
 
         </div>
-        <div class="span8">
-          <div id="demo-display"></div>
+        <div class="span8" id="demo-container">
+          <div id="graph-controls">
+            <button class="move-up">&uarr;</button><br>
+            <button class="move-left">&larr;</button>
+            <button class="move-right">&rarr;</button><br>
+            <button class="move-down">&darr;</button><br>
+            <button class="zoom-out">-</button>
+            <button class="zoom-in">+</button>
+          </div>
+          <div id="demo-display">
+          </div>
         </div>
       </div>
 

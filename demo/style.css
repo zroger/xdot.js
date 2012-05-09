@@ -1,13 +1,25 @@
-.node {
-  margin-right: 3px;
-  padding: 3px;
-  border: solid 1px #ddd;
-  background: #eee;
+#demo-container {
+  position: relative;
 }
 
-span.symbol {
-  margin-right: 3px;
-  padding: 3px;
-  border: solid 1px #dff;
-  background: #eff;
+#demo-display {
+  height: 100%;
+  background: url(bg.png) repeat 0 0;
+  border: solid 1px #ccc;
+  overflow: hidden;
+}
+
+#graph-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 50px;
+  z-index: 1;
+
+  background: #fff;
+  width: 64px;
+  padding: 4px;
+  border: solid 1px #ddd;
+  box-shadow: 1px 1px 10px #aaa;
+  text-align: center;
 }
